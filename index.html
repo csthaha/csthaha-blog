@@ -11,7 +11,18 @@
   <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/buble.css"> -->
   <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/pure.css"> -->
   <!-- <link rel="stylesheet" href="//unpkg.com/docsify/themes/dolphin.css"> -->
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
 </head>
+<style>
+  .app-nav,.no-badge {
+    position: fixed;
+  }
+  .app-nav li ul a {
+    color: #000;
+  }
+
+</style>
 <body>
   <div id="app"></div>
   <script>
@@ -19,10 +30,55 @@
       name: '',
       repo: '',
       coverPage: true,     // 定义页面，根据页面访问
-      loadNavbar: true    //  定制导航栏
+      loadNavbar: true,    //  定制导航栏
+      search: {
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        noData: '找不到结果',//搜索不到结果时显示
+        paths: 'auto',//自动
+        placeholder: '搜索',//搜索框提示
+      },
+      auto2top: true,
+      name: 'docsify',
+      themeColor: 'aqua',
+      mergeNavbar: true,
+      notFoundPage: 'true',
+      // ga: 'UA-XXXXX-Y'
+      count:{
+        countable:true,
+        fontsize:'0.9em',
+        color:'#CCFF00',
+        language:'chinese'
+      }
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- search -->
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+
+  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script> -->
+  <!-- <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script> -->
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    // const gitalk = new Gitalk({
+    //   clientID: 'Github Application Client ID',
+    //   clientSecret: 'Github Application Client Secret',
+    //   // repo: 'Github repo',
+    //   // owner: 'Github repo owner',
+    //   // admin: ['Github repo collaborators, only these guys can initialize github issues'],
+    //   // facebook-like distraction free mode
+    //   // distractionFreeMode: false
+    // })
+  </script>
+
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
 </body>
 </html>

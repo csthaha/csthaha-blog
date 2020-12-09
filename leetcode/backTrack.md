@@ -10,7 +10,7 @@
 
 **核心就是 for 循环里面的递归，在递归调用之前 做选择，在递归调用之后撤销选择，换一种路径。**
 
-#### leetcode 46全排列
+#### leetcode 46: 全排列
 ```javascript
 /**
  * @param {number[]} nums

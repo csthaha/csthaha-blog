@@ -118,3 +118,89 @@ function quickSort(arr) {
 
 console.log(quickSort([-2,-7,8,1,3,9,6]));
 ```
+
+#### 插入排序
+> 核心：默认第一项是已经排好序的数组，然后对于未排序数据，在已排序序列中从后往前比较交换，找到相应位置并插入。
+**code如下：**
+```javascript
+function insertSort(arr) {
+    for(let i = 1; i < arr.length; i++) {
+        // 默认第一项是已经排好序的数组
+        for(let j = i; j > 0; j--) {
+            // 然后 将未排序数组，从后往前进行比较，小则交换。
+            if(arr[j] < arr[j - 1]) {
+                swap(arr, j, j - 1)
+            }
+        }
+    }
+    return arr;
+}
+
+function swap(arrray,i, j) {
+    let temp;
+    temp = arrray[i];
+    arrray[i] = arrray[j];
+    arrray[j] = temp;
+    // return arrray;
+}
+
+console.log(insertSort([1,3,2]));
+```
+
+#### 归并排序
+> 核心：先将数组差分为二，将已有序的子序列合并，得到完全有序的序列。思想跟合并有序链表相似。
+**code如下：**
+```javascript
+/**
+ * 归并排序
+ */
+
+ function mergeSort(arr) {
+    if(arr.length <= 1) return arr;
+    let mid = Math.floor(arr.length / 2),
+        left = arr.slice(0, mid), // 不改变原数组，返回新数组，不包含 end
+        right = arr.slice(mid);
+    return merge(mergeSort(left), mergeSort(right))
+ }
+
+ function merge(left, right) {
+    var res = [];
+    while(left.length && right.length) {
+        // 将有序的子序列合并成有序数组
+        if(left[0] > right[0]) {
+            res.push(right.shift())
+        } else {
+            res.push(left.shift())
+        }
+    }
+
+    return res.concat(left).concat(right)   // 拼接剩余的 left 或 right
+ }
+
+ console.log(mergeSort([1,3,2,7]));
+```
+**相似leetcode 21：合并有序链表**
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+    if(!l1) return l2;
+    if(!l2) return l1;
+    if(l1.val < l2.val) {
+        l1.next = mergeTwoLists(l1.next, l2)
+        return l1;
+    } else {
+        l2.next = mergeTwoLists(l1, l2.next)
+    }
+};
+```

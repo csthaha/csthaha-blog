@@ -33,5 +33,6 @@
 | JavaScript  | [2 javascript](javascript.md) |
 | ES6         | [2 es](es.md) |
 | Vue         | [2 vue](vue.md) |
+| http         | [2 http](http.md) |
 
 ***

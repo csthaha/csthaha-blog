@@ -27,3 +27,51 @@ var reverseList = function(head) {
     return pre
 };
 ```
+
+#### 02.02 返回倒数第 K 个节点
+> 输入： 1->2->3->4->5 和 k = 2 输出： 4
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {number}
+ */
+// 法一：
+var kthToLast = function(head, k) {
+    // 返回倒数第 k 个节点，就是相当于第 length - k + 1 个节点
+    var len = 0, cur = head;
+    while(head) {
+        // 求链表长度
+        len++;
+        head = head.next;
+    }
+
+    for(let i = 1; i < len - k + 1; i++) {
+        // 返回的节点
+        cur = cur.next
+    }
+    return cur.val
+};
+```
+```javascript
+// 法二：双指针。快慢指针之间相差 k 返回慢指针节点。
+var kthToLast = function(head, k) {
+    let fast = head;
+    let low = head;
+    let n = 0
+    while(fast) {
+        fast = fast.next;
+        if (n >= k) {
+            low = low.next;
+        }
+        n++;
+    }
+}
+``` 

@@ -4,10 +4,10 @@
     color: #000;
     position: fixed;
     margin-top: 0;
-    right: 25px;
+    right: 1.5rem;
   }
   .app-nav ul {
-    margin-right: 35px;
+    width: 320px;
   }
   .app-nav ul li a {
     color: #000;

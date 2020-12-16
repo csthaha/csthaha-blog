@@ -1,5 +1,10 @@
 
-<!-- <img width="120px" height="120px" style="border-radius: 50%" bor src="https://avatars3.githubusercontent.com/u/48152550?s=460&amp;u=fbab86cdab3a83aa23286b00f4e431f971abc2f6amp;v=4"> -->
+<img width="120px" height="120px" style="border-radius: 50%" bor src="https://avatars3.githubusercontent.com/u/48152550?s=460&amp;u=fbab86cdab3a83aa23286b00f4e431f971abc2f6amp;v=4">
+<h1>csthaha</h1>
+<span>因为不知道答案，所以需要彻夜深思熟虑！</span>
 
-<h1>彻夜深思熟虑，但依然不知道答案</h1>
+<span>这仅仅只是个人一个记录东西的地方，知识也罢，文字也好，也可能抒发自己的情感，想写就写，仅此而已！</span>
 
+[GitHub](https://github.com/csthaha)    [Get Started](README)
+
+<!-- ![color](#f0f0f0) -->

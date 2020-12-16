@@ -1,4 +1,9 @@
-section.cover h1 {
-    font-family: 'Lobster', cursive;
+section.cover h1, span, p a {
+    font-family: Brush Script MT, Brush Script Std, cursive;
     color: #25798a;
+}
+
+section.cover span {
+    font-family: 'Lobster', cursive;
+    font-size: 16px;
 }

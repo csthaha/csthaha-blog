@@ -1,14 +1,14 @@
 .app-nav,.no-badge {
     background-color: #ea6f5a;
-    font-family: system-ui;
+    font-family: 'Lobster', cursive;
     color: #000;
     position: fixed;
     margin-top: 0;
     right: 1.5rem;
   }
-  .app-nav ul {
+  /* .app-nav ul {
     width: 320px;
-  }
+  } */
   .app-nav ul li a {
     color: #000;
   }
@@ -45,4 +45,9 @@
   .sidebar > h1 a {
     font-family: 'Lobster', cursive;
     color: #25798a;
+  }
+
+  .app-nav li ul {
+    text-align: center;
+    width: 100px;
   }

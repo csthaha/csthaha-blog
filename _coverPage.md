@@ -14,3 +14,7 @@
 <span>这仅仅只是个人一个记录东西的地方，知识也罢，文字也好，也可能抒发自己的情感，想写就写，仅此而已！</span>
 
 [GitHub](https://github.com/csthaha)    [Get Started](README)
+
+<!-- ![color](#00FFCC) -->
+<!-- ![color](#669999) -->
+![color](#999999)

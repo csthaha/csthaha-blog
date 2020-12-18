@@ -54,3 +54,7 @@
   h2 a span {
     color: red !important ;
   }
+
+  .sidebar ul li a {
+    font-family: Brush Script MT, Brush Script Std, cursive;
+  }

@@ -17,6 +17,8 @@ var name = 'cst'
 ```
 - const 在声明变量时必须初始化赋值，一旦声明，其声明的值就不允许改变，更不允许重复声明；如 const 声明了一个复合类型的常量，**其存储的是一个引用地址，不允许改变的是这个地址，而对象本身是可以改变的。**
 
+----
+
 ## new
 > MDN：**new 运算符**创建一个用户定义的 <span style="color: #ea6f5a">对象类型的实例</span> 或具有 <span style="color: #ea6f5a">构造函数的内置对象的实例</span>。
 ```javascript
@@ -76,5 +78,103 @@ function car(model, year) {
 const bc = myNew(car, 'bc', '2021')
 console.log(bc, bc.model, '-', bc.year);    //{ __proto: {}, model: 'bc', year: '2021' } bc - 2021
 ```
+------
+## this 指向
+> 在绝大多数情况下，函数的调用方式决定了 this 的值(运行时绑定). this 不能在执行期间被赋值，并且在每次函数被调用时 this 的值也可能不同。
+
+**描述**：
+1. <span style="color: #ea6f5a">全局上下文：</span>
+> 无论是否在严格模式下，在全局执行环境中（在任何函数体外部）this 都指向全局对象。
+```javascript
+// 在浏览器中，window 对象同时也是全局对象：
+console.log(this === window); // true
+a = 37;
+console.log(window.a); // 37
+this.b = "MDN";
+console.log(window.b)   // "MDN"
+console.log(b)      //"MDN"
+```
+2. <span style="color: #ea6f5a">bind 方法: </span>
+> ECMAScript 引入了 Function.prototype.bind()。调用 f.bind(someObject)会创建一个与 f 具有相同函数体和作用域的函数，但是在这个新函数中，this 将永久被绑定到了 bind 的第一个参数，无论这个函数是如何被调用的。
+```javascript
+function f() {
+    return this.a;
+}
+var g = f.bind({a: "azerty"});
+console.log(g());   // azerty
+var h = g.bind({a: 'yoo'})      // **bind只生效一次**
+console.log(h())    // azerty
+var o = {a: 37, f: f, g: g, h: h}
+console.log(o.a, o.f(), o.g(), o.h()); // 37, 37, azerty, azerty
+```
+
+3. <span style="color: #ea6f5a">作为对象的方法: </span>
+> 当函数作为对象里的方法被调用时，this 被设置为调用该函数的对象。
+
+当 o.f() 被 **调用** 时，函数内的 this 将绑定到 o 对象。
+```javascript
+varo = {
+    prop: 37,
+    f: function() {
+        return this.prop;
+    }
+}
+console.log(o.f()); // 37
+
+// 请注意， 这样的行为完全不会受函数定义方式或位置的影响。如下结果是一样的
+var o = {prop: 37}
+function fn() {
+    return this.prop
+}
+o.f = fn()
+console.log(o.f())  // 37
+
+// 请注意
+var prop = 'global'
+varo = {
+    prop: 37,
+    f: function() {
+        return this.prop;
+    }
+}
+
+var g = varo.f
+console.log(g());   // node 中 this undefined，所以undefined，浏览器中 global
+```
+
+4. <span style="color: #ea6f5a">作为构造函数: </span>
+> 当一个函数用作构造函数时（使用 new 关键字），它的 this 被绑定到正在构造的新对象。
+**虽然构造函数返回的默认值是 this 所指的那个对象，但它仍可以手动返回其他的对象（如果返回值不是一个对象，则返回 this 对象）** 就是 news 操作符的第四步
+```javascript
+/*
+ * 构造函数这样工作:
+ *
+ * function MyConstructor(){
+ *   // 函数实体写在这里
+ *   // 根据需要在this上创建属性，然后赋值给它们，比如：
+ *   this.fum = "nom";
+ *   // 等等...
+ *
+ *   // 如果函数具有返回对象的return语句，
+ *   // 则该对象将是 new 表达式的结果。
+ *   // 否则，表达式的结果是当前绑定到 this 的对象。
+ *   //（即通常看到的常见情况）。
+ * }
+ */
+function C(){
+  this.a = 37;
+}
+var o = new C();
+console.log(o.a); // logs 37
 
 
+function C2(){
+  this.a = 37;
+  return {a:38};
+}
+
+o = new C2();
+console.log(o.a); // logs 38
+```
+5. <span style="color: #ea6f5a">箭头函数: </span>
+> 在箭头函数中，this与封闭词法环境的this保持一致。在全局代码中，它将被设置为全局对象

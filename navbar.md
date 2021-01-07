@@ -1,6 +1,7 @@
 <!-- //注：创建相对应的md文件跳转 -->
 * 每日
     * [日志](_coverPage.md)
+    * [2021/1/7(并查集)](unionFind.md)
 
 * 力扣
     * [回溯算法](leetcode/backTrack.md)

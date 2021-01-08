@@ -1,4 +1,4 @@
-## 并查集
+## 1/7 (并查集)
  主要是用于城市间道路，朋友圈问题。[例题](http://acm.hdu.edu.cn/showproblem.php?pid=1232)，leetcode 的省份数量，朋友圈问题.
 
 解释：
@@ -84,4 +84,50 @@ var findCircleNum = function(isConnected) {
 
 console.log(findCircleNum([[1,0,0], [0,1,0], [0,0,1]])) // 3
 console.log(findCircleNum([[1,1,0],[1,1,0],[0,0,1]]))   // 2
+```
+
+## 1/8 (数组旋转)
+- leetcode 189：
+
+```javascript
+// leetcode 189 旋转数组
+
+// 法一： 可以解决问题，但不符合题目要求，原地反转（空间复杂度需要 O(1) ）
+var rotate = function(nums, k) {
+    var arr = new Array(nums.length).fill(0)
+    for(let i = 0; i < nums.length; i++) {
+        let temp = nums[i]
+        if(i + k <= nums.length - 1) {
+            arr[i + k] = temp;
+        } else {
+            arr[i + k - nums.leng89th] = temp
+        }
+    }
+    return arr
+};
+
+const reverse = (nums, start, end) => {
+    while (start < end) {
+        const temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start += 1;
+        end -= 1;
+    }
+}
+
+var rotate = function(nums, k) {
+    k %= nums.length;
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
+};
+// 操作	                    结果
+// 原始数组	                1 2 3 4 5 6 7
+// 翻转所有元素	            7 6 5 4 3 2 1
+// 翻转 [0, k\bmod n - 1][0,kmodn−1] 区间的元素	5 6 7 4 3 2 1
+// 翻转 [k\bmod n, n - 1][kmodn,n−1] 区间的元素	5 6 7 1 2 3 4
+
+console.log(rotate([-1,-100,3,99], 2))
+console.log(rotate([1,2,3,4,5,6,7], 3))
 ```

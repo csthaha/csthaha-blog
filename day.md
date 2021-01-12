@@ -131,3 +131,27 @@ var rotate = function(nums, k) {
 console.log(rotate([-1,-100,3,99], 2))
 console.log(rotate([1,2,3,4,5,6,7], 3))
 ```
+
+## 1/8 (滑动窗口)
+```javascript
+function slideWindow(str) {
+    let l = 0, r = 0;
+    let reString = '', maxLength = 0;
+    while(r < str.length && l <= r) {
+        if(reString.indexOf(str[r]) > -1) {
+            reString = reString.slice(1)
+            l++;
+        } else {
+            maxLength = maxLength > (r - l + 1) ? maxLength : (r - l + 1);
+            reString += str[r]
+            r++;
+        }
+    }
+    return maxLength
+}
+
+console.log(slideWindow('sfgf'));       // 3
+console.log(slideWindow('sffag'));      // 3
+console.log(slideWindow('aaaa'));       // 1
+console.log(slideWindow('sffa'));       // 2
+```

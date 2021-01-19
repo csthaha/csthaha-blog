@@ -178,3 +178,77 @@ console.log(o.a); // logs 38
 ```
 5. <span style="color: #ea6f5a">箭头函数: </span>
 > 在箭头函数中，this与封闭词法环境的this保持一致。在全局代码中，它将被设置为全局对象
+
+## 深浅拷贝
+### 浅拷贝
+> 自己创建一个新的对象，来接受你要重新复制或引用的对象值。如果对象属性是基本的数据类型，复制的就是基本类型的值给新对象；但如果属性是引用数据类型，复制的就是内存中的地址，如果其中一个对象改变了这个内存中地址，肯定会影响到另一个对象
+
+1. object.assign
+`object.assign(target, ...source)`
+```javascript
+    let target = {};
+    let source = { a: { b: 2 } }
+    Object.assign(target, source);
+
+    console.log(target); // { a: { b: 2 } }; 
+
+    source.a.b = 10; 
+    console.log(source); // { a: { b: 10 } }; 
+    console.log(target); // { a: { b: 10 } };
+```
+- 它不会拷贝对象的继承属性
+- 它不会拷贝对象的不可枚举的属性
+- 可以拷贝 Symbol 类型的属性。
+
+2. 扩展运算符
+> 扩展运算符的语法：let cloneObj = {...obj}
+```javascript
+let obj = {a: 1, b: {c: 2}}
+let obj2 = {...obj}
+obj.a = 2
+console.log(obj)    // { a: 2, b: { c: 2 } }
+console.log(obj2)   // { a: 1, b: { c: 2 } }
+```
+- 扩展运算符 和 object.assign 有同样的缺陷，也就是实现的浅拷贝的功能差不多，但是如果属性都是基本类型的值，使用扩展运算符进行浅拷贝会更加方便。
+
+3. concat 拷贝数组
+> 数组的 concat 方法其实也是浅拷贝，所以连接一个含有引用类型的数组时，需要注意修改原数组中 的元素属性，因为它会影响拷贝之后连接的数组。
+```javascript
+let arr = [1, 2, 3];
+let newArr = arr.concat();
+newArr[1] = 100;
+console.log(arr);  // [ 1, 2, 3 ]
+console.log(newArr); // [ 1, 100, 3 ]
+```
+
+手工实现一个浅拷贝
+```javascript
+
+/**
+ * 浅拷贝：
+ * 1. 对 基本类型 做一个最基本的一个拷贝；
+ * 2. 对 引用类型 开辟一个新的存储，并且拷贝一层对象属性。
+ * @param {需要拷贝的对象} obj 
+ */
+
+const shallowClone = (target) => {
+    if(typeof target === 'object' && target !== null) {
+        const cloneTarget = Array.isArray(target) ? [] : {};
+        for(let ele in target) {
+            if(target.hasOwnProperty(ele)) {
+                cloneTarget[ele] = target[ele]
+            }
+        }
+        return cloneTarget;
+    } else {
+        return target;
+    }
+}
+
+const cst = {age: 22, name: 'cst'}
+let cloneCst = shallowClone(cst)
+console.log(cloneCst);
+```
+
+### 深拷贝
+> 

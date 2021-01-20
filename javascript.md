@@ -187,14 +187,19 @@ console.log(o.a); // logs 38
 `object.assign(target, ...source)`
 ```javascript
     let target = {};
-    let source = { a: { b: 2 } }
+    let source = { a:1,c: { b: 2 } }
     Object.assign(target, source);
 
-    console.log(target); // { a: { b: 2 } }; 
+    console.log(target); // { a:1,c: { b: 2 } }
+    source.a = 11
+    // 理解： 如果对象属性是基本的数据类型，复制的就是基本类型的值给新对象，其复制对象并不会因此改变。
+    // a 的值 为 1，是基本类型，所以当 改为 11 时，复制对象并不会改变。
 
-    source.a.b = 10; 
-    console.log(source); // { a: { b: 10 } }; 
-    console.log(target); // { a: { b: 10 } };
+    source.c.b = 10;    // 都改变了
+    // 理解：如果属性是引用类型，复制的就是内存中的地址，如果改变了内存地址，所以会影响到另一个对象。
+    // 属性 c 是一个引用，所以当改变 c.b 的时候，两者都会被改变
+    console.log(source); // { a:11, c: { b: 10 } }; 
+    console.log(target); // { a: 1,c:{ b: 10 } };
 ```
 - 它不会拷贝对象的继承属性
 - 它不会拷贝对象的不可枚举的属性
@@ -206,6 +211,7 @@ console.log(o.a); // logs 38
 let obj = {a: 1, b: {c: 2}}
 let obj2 = {...obj}
 obj.a = 2
+// 解释： 同上属性 a
 console.log(obj)    // { a: 2, b: { c: 2 } }
 console.log(obj2)   // { a: 1, b: { c: 2 } }
 ```
@@ -251,4 +257,40 @@ console.log(cloneCst);
 ```
 
 ### 深拷贝
-> 
+> 浅拷贝只是创建了一个新的对象，复制了原有对象的基本类型的值，而引用数据类型只拷贝了一层属性，再深层的还是无法进行拷贝。深拷贝则不同，对于复杂引用数据类型，其在堆内存中完全开辟了一块内存地址，并将原有的对象完全复制过来。这两个对象相互独立，不受影响，彻底实现了内存上的分离。
+
+总结：将一个对象从内存中完整地拷贝出来一份给目标对象，并从堆内存中开辟一个全新的空间存放新对象，且新对象的修改并不会改变原对象，二者实现真正的分离。
+
+1. Json.parse(Json.stringify()) 
+> 先将对象序列化（stringfy）为JSON字符串，然后再将其解析为对象。
+注意点：
+- 拷贝的对象的值中如果有函数，undefined，symbol这几种类型，经过 Json.stringify序列化之后的字符串中这个键值对会消失。
+- 拷贝 Date 引用类型会变成字符串
+- 无法拷贝不可枚举的属性
+- 无法拷贝对象的原型链
+- 拷贝 RegExp 引用类型会变成空对象 等等
+
+2. 基础版 手写递归实现
+```javascript
+    /**
+     * 深拷贝
+     */
+
+    function deepClone(obj) { 
+        if (typeof obj !== "object") return obj;
+        let cloneObj = Array.isArray(obj) ? [] : {}
+        for(let key in obj) {                 //遍历
+        if(typeof obj[key] ==='object') { 
+            cloneObj[key] = deepClone(obj[key])  //是对象就再次调用该函数递归
+        } else {
+            cloneObj[key] = obj[key]  //基本类型的话直接复制值
+        }
+        }
+        return cloneObj
+    }
+    const ccc = {a: 1, c: {b: 2}};
+    let cloneCcc = deepClone(ccc)
+    ccc.c.b = 10
+    console.log(cloneCcc);  //{ a: 1, c: { b: 2 } }
+```
+注意点：这种方法只是针对普通的引用类型的值做递归复制，而对于 Array、Date、RegExp、Error、Function 这样的引用类型并不能正确地拷贝。

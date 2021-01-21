@@ -294,3 +294,53 @@ console.log(cloneCst);
     console.log(cloneCcc);  //{ a: 1, c: { b: 2 } }
 ```
 注意点：这种方法只是针对普通的引用类型的值做递归复制，而对于 Array、Date、RegExp、Error、Function 这样的引用类型并不能正确地拷贝。
+
+## jsInherit(Js 的继承)
+> 继承是可以使得子类别分别具有父类的各种属性和方法。比如 “轿车” 和 “货车” 分别继承了汽车的属性。而不需要再次在 “轿车” 中定义汽车已有的属性。
+
+<p style="color: #ea6f5a">JS 实现继承的几种方式:</p>
+
+### 1. 原型链继承
+> 原型链继承涉及到 构造函数、原型和实例，三者之间存在着一定的关系，即每一个构造函数都有一个原型对象，原型对象又包含一个指向构造函数的指针，而实例包含一个原型对象的指针。
+
+- 构造函数都有一个原型对象: 每创建一个函数，该函数都会自带有一个 prototype 属性。该属性是一个指针，指向一个对象，该对象称之为原型对象
+- 原型对象包含一个指向构造函数的指针：原型对象上默认有一个属性 constructor，该属性也是一个指针，指向其相关联的构造函数。
+- 实例包含一个原型对象的指针：通过调用构造函数产生的实例对象，都拥有一个内部属性，指向了原型对象。它的实例对象能够访问原型对象上的所有属性和方法。
+
+```javascript
+// 1. 原型链继承
+function Parent() {
+    this.name = 'parent'
+    this.play = [1,2,3]
+}
+
+Parent.prototype.say = function() {
+    return this.name
+}
+
+function Child() {
+    this.type = 'child'
+}
+
+// 验证：每一个构造函数都有一个原型对象 prototype，原型对象又包含一个指向 constructor 构造函数的指针
+// console.log(Parent.prototype.constructor === Parent)    // true
+// console.log(Child.prototype.constructor === Child)    // true
+
+var child1 = new Parent()   // 这是 parent 的实例，只是通过 prototype 可以访问原型上的属性和方法
+console.log(child1.play)  // [1,2,3]
+child1.play.push(5)
+var child2 = new Parent()
+console.log(child1.play)   // [1,2,3, 5]  
+console.log(child2.play) // [1,2,3] 并不能是 parent 实例变化， 但通过原型链继承则会
+
+// 实现继承 Parent.prototype只是一个指针，指向的是原型对象，利用这个指针可以帮助我们实现js继承。
+Child.prototype = new Parent()
+// 实现继承  
+var child3 = new Child()
+console.log(child3.name + '-' + child3.play + '-' + child3.say()) // parent-1,2,3-parent
+
+child3.play.push(4)
+// 缺点：两个实例使用的是同一个原型对象。它们的内存空间是共享的，当一个发生变化的时候，另外一个也会随之变化
+var child4 = new Child()
+console.log(child4.name + '-' + child4.play + '-' + child4.say()) // parent-1,2,3,4-parent
+```

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="startCount()">开始计数!</button>
+    <input type="text" id="txt">
+    <button onclick="stopCount()">停止计数!</button>
+
+    <script>
+        var c = 0;
+        var t;
+        var timer_is_on = 0;
+        
+        function timedCount() {
+            document.getElementById("txt").value = c;
+            c = c + 1;
+            t = setTimeout(function(){timedCount()}, 1000);
+        }
+        
+        function startCount() {
+            if (!timer_is_on) {
+                timer_is_on = 1;
+                timedCount();
+            }
+        }
+        
+        function stopCount() {
+            clearTimeout(t);
+            timer_is_on = 0;
+        }
+    </script>
+</body>
+</html>

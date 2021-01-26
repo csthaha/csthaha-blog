@@ -257,3 +257,37 @@ function request(url) {
 }
 multiRequest(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], 2)
 ```
+
+## 1/26 setInterval、setTimtout
+### setTimeout
+> setTimeout(callback, time) 第一个参数为回调函数，第二个参数是时间单位 ms 多久执行 callback
+```javascript
+let time = 1000
+const callback= () => {
+    console.log(`${time / 1000 } s 之后执行 callback `)
+}
+setTimeout(callback, time);
+```
+
+### setInterval
+> setInterval(callback, time) 第一个参数为回调函数，第二个参数是时间单位 ms 多久执行 callback
+> 区别在于：setInterval 会隔 time 时间之后重复执行
+```javascript
+setInterval(() => {
+    console.log(`${time / 1000 } s 之后 setInterval 重复执行 callback `)
+}, time);
+```
+
+### setTimeout 实现 setInterval
+> setInterval 就是重复调用 setTimeout 递归调用
+```javascript
+const mySetInterval = (cb, time) => {
+    const fn = () => {
+        cb(); // 调用回调函数
+        setTimeout(() => {
+            fn()    // 递归调用自己
+        }, time)
+    }
+    setTimeout(fn, time)
+}
+```

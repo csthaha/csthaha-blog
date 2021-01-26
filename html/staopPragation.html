@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="list">
+        <li>red</li>
+        <li>yellow</li>
+        <li>blue</li>
+    </ul>
+
+    <script>
+        // (function(){
+        //     var list = document.getElementById('list');
+        //     var colors = list.getElementsByTagName('li');
+        //     for(var i=0;i<colors.length;i++){
+        //         colors[i].addEventListener('click',showColor,false);
+        //     };
+        //     function showColor(e){
+        //         var x = e.target;
+        //         alert("The color is " + x.innerHTML);
+        //     };
+        // })();
+
+        (function(){
+            var list = document.getElementById('list');
+            list.addEventListener('click',showColor,false);
+            function showColor(e){
+                console.log(e)
+                // var x = e.target;
+                // if(x.nodeName.toLowerCase() === 'li'){
+                //     alert('The color is ' + x.innerHTML);
+                // }
+            }
+        })();
+    </script>
+</body>
+</html>

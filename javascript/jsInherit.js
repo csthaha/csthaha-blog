@@ -33,3 +33,73 @@ child3.play.push(4)
 // 缺点：两个实例使用的是同一个原型对象。它们的内存空间是共享的，当一个发生变化的时候，另外一个也会随之变化
 var child4 = new Child()
 console.log(child4.name + '-' + child4.play + '-' + child4.say()) // parent-1,2,3,4-parent
+
+// 2. 构造函数继承
+console.log('----------2.构造函数继承----------')
+
+function Parent1() {
+    this.name = 'parent1'
+}
+
+Parent1.prototype.getName = function() {
+    return this.name
+}
+
+function Child5() {
+    Parent1.call(this)
+    this.type = 'child5'
+}
+
+let child5 = new Child5();
+console.log(child5) // Child5 { name: 'parent1', type: 'child5' }
+// 所以除了 Child5 的属性 type 之外，也继承了 Parent1 的属性 name
+
+// console.log(child5.getName())       // TypeError
+// 问题是，父类原型对象中一旦存在父类之前自己定义的方法，那么子类将无法继承这些方法。
+
+// 3. 组合继承（原型链、构造函数组合继承）
+console.log('----------3.组合继承----------')
+
+function Parent6() {
+    this.name = 'parent6'
+    this.play = [1,3,5]
+}
+
+Parent6.prototype.getName =  function() {
+    return this.name
+}
+
+function Child6() {
+    Parent6.call(this)
+    this.type = 'child6'    //构造函数继承
+}
+
+Child6.prototype = new Parent6()    // 原型链继承（改变了 Child6 的原型对象）
+
+Child6.prototype.constructor = Child6
+
+var child7 = new Child6()
+var child8 = new Child6()
+child7.play.push(7)
+console.log(child7.play, child8.play)       // [ 1, 3, 5, 7 ] [ 1, 3, 5 ] 互不影响了 
+console.log(child7.getName(), child8.getName()) // parent6 parent6
+
+// 4. 原型式继承
+console.log('----------4.组合继承----------')
+let parent4 = {
+    name: "parent4",
+    friends: ["p1", "p2", "p3"],
+    getName: function() {
+      return this.name;
+    }
+  };
+  let person4 = Object.create(parent4);
+  person4.name = "tom";
+  person4.friends.push("jerry");
+  let person5 = Object.create(parent4);
+  person5.friends.push("lucy");
+  console.log(person4.name);        // tom
+  console.log(person4.name === person4.getName());      // true
+  console.log(person5.name);        // parent4
+  console.log(person4.friends);     // [ 'p1', 'p2', 'p3', 'jerry', 'lucy' ]
+  console.log(person5.friends);     // [ 'p1', 'p2', 'p3', 'jerry', 'lucy' ]

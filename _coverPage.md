@@ -13,8 +13,13 @@
 
 <span>这仅仅只是个人一个记录东西的地方，知识也罢，文字也好，也可能抒发自己的情感，想写就写，仅此而已！</span>
 
-[GitHub](https://github.com/csthaha)    
-[2021flag](2021flag) [Get Started](README)
+[GitHub](https://github.com/csthaha)   
+
+[2021flag](2021flag) 
+
+[2021/2/4-log](log/20210104)
+
+[Get Started](README)
 <!-- ![color](#00FFCC) -->
 <!-- ![color](#669999) -->
 <!-- ![color](#999999) -->

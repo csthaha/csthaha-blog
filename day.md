@@ -343,3 +343,86 @@ var fairCandySwap = function(A, B) {
 
 console.log(fairCandySwap([1,1],[2,2]));
 ```
+
+## [2/4 leetcode 199 二叉树右视图](https://leetcode-cn.com/problems/binary-tree-right-side-view/)
+```javascript
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function(root) {
+    if(!root) return []
+    let res = [],
+        parent = [root],
+        children = []
+    while(parent.length > 0) {
+        let len = parent.length
+        while(len--) {
+            let cur = parent.shift()
+            cur.left && parent.push(cur.left)
+            cur.right && parent.push(cur.right)
+            if(len == 0) {
+                res.push(cur.val)
+            }
+        }
+        // let cur = parent.shift();
+        // cur.left && children.push(cur.left)
+        // cur.right && children.push(cur.right)
+        // if(parent.length === 0) {
+        //     res.push(cur.val)
+        //     parent = children
+        //     children = []
+        // }
+    }
+    return res
+
+};
+```
+
+## [2/4 leetcode 643 子数组最大平均数](https://leetcode-cn.com/problems/maximum-average-subarray-i/)
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findMaxAverage = function (nums, k) {
+    let i = 1, sum = 0, res = 0;
+    for(let m = 0; m < k; m++) {
+        sum += nums[m]
+    }
+    // while (i <= nums.length - k) {
+        
+    //     for (let j = i; j <= i + k - 1 ; j++) {
+    //         sum += nums[j]
+    //     }
+
+    //     if(sum > res) {
+            
+    //         res = sum
+    //     }
+    //     i++
+    //     sum = 0
+    // }
+
+    // 滑动窗口
+    res = sum
+    console.log(sum, res)
+    for(let j = k; j < nums.length; j++) {
+        sum = sum - nums[j - k] + nums[j];
+        res = Math.max(res, sum)
+    }
+    return res / k
+};
+
+console.log(findMaxAverage([1,12,-5,-6,50,3], 4))
+// console.log(findMaxAverage([-1], 1))
+```

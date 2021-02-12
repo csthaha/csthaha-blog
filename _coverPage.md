@@ -17,7 +17,9 @@
 
 [2021flag](2021flag) 
 
-[2021/2/4-log](log/20210104)
+[2021/1/4-log](log/20210104)
+
+[2021/2/12-log](log/20210212.md)
 
 [Get Started](README)
 <!-- ![color](#00FFCC) -->

@@ -79,6 +79,42 @@ const bc = myNew(car, 'bc', '2021')
 console.log(bc, bc.model, '-', bc.year);    //{ __proto: {}, model: 'bc', year: '2021' } bc - 2021
 ```
 ------
+
+## instanceof
+> MDN: instanceof 运算符用于检测构造函数 `prototype` 属性是否出现在某个实例对象的原型链上。
+> (实例的原型是否是构造函数)
+```javascript
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+const cst = new Person('cst', 23)
+
+console.log(cst instanceof Person)  // true instanceof 用于检测实例是否在构造函数的原型上
+console.log(Person.prototype === cst.__proto__)     // true 构造函数的 prototype 是否出现在某个 实例的原型链上
+```
+
+instanceof 实现
+```javascript
+
+const myInstanceof = function (instance, constructor) {
+    // let pro = constructor.prototype
+    while(true) {
+        if(instance === null) {
+            return false
+        }
+        if( instance.__proto__ === constructor.prototype ) {
+            return true
+        }
+
+        instance = instance.__proto__
+    }
+}
+
+console.log(myInstanceof(cst, Person))  // true
+```
+
 ## this 指向
 > 在绝大多数情况下，函数的调用方式决定了 this 的值(运行时绑定). this 不能在执行期间被赋值，并且在每次函数被调用时 this 的值也可能不同。
 

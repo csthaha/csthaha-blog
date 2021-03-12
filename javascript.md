@@ -555,6 +555,44 @@ function request(url) {
     })
 }
 multiRequest(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], 2)
+
+
+// 其实就是一个简单的 回溯， 最终将 maxNum 个任务队列请求 return Promise.all(ret)
+function moreMultiRequest(urls, maxNum) {
+    var ret = []  // 任务队列
+    let i = 0;  // 请求个数
+    // let promise = new Promise(r => r())
+    const backTrak = () => {
+        if(i >= urls.length) {
+            // return promise
+            return
+        }
+
+        const task = request(urls[i++]).finally(() => {
+            backTrak()
+        })
+
+        ret.push(task)
+    }
+
+    while(i < maxNum) {
+        backTrak()
+    }
+
+    // return promise.then(() => Promise.all(ret))
+    return Promise.all(ret)
+}
+
+function request(url) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(url)
+            console.log(url)
+        }, 1000);
+    })
+}
+
+moreMultiRequest([1,2,3,4], 2)
 ```
 
 ### [Promise 实现](https://tech.meituan.com/2014/06/05/promise-insight.html)
@@ -605,4 +643,11 @@ function myPromise(fn) {
     }
     fn(resolve);
 }
+```
+
+## Curry
+> curry 为实现多参函数提供了一个递归降解的实现思路————把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数。
+
+实现：
+```javascritp
 ```

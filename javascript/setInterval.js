@@ -33,7 +33,7 @@ function mySetInterval(callback, time) {
     let id;
     const task = (cb, t) => {
         id = setTimeout(() => {
-            callback();
+            cb();
             console.log('id is', id)
             task(cb,t)
         },t)

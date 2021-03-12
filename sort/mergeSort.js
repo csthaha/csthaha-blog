@@ -20,8 +20,8 @@
             res.push(left.shift())
         }
     }
-
-    return res.concat(left).concat(right)   // 拼接剩余的 left 或 right
+    console.log(left, right)
+    return res.concat(left).concat(right)   // 拼接剩余的 left 或 right（left，right 必有一个为空）
  }
-
+ console.log(merge([1,3],[2,5]));
  console.log(mergeSort([1,3,2,7]));

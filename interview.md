@@ -79,3 +79,10 @@ if(!(m in global)){
         首先引入fastclick库，再把页面内所有touch事件都换成click
     2. 只用 touch 或者 只用 click
     3. tap后延迟350ms再隐藏mask
+
+2. flex 布局的缺点
+    浏览器兼容性比较差，只能兼容到ie9及以上。
+
+3. rem
+    优点：能维持整体的布局效果，移动端兼容性好，不用写多个 css 代码，而且还可以利用 @media进行优化。
+    缺点：开头要引入一段 js 代码，单位写成 rem，计算 rem 比较麻烦

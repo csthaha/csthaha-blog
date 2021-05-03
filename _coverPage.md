@@ -21,6 +21,8 @@
 
 [2021/2/12-log](log/20210212.md)
 
+[2021/5/2-log](log/20210502.md)
+
 [Get Started](README)
 <!-- ![color](#00FFCC) -->
 <!-- ![color](#669999) -->

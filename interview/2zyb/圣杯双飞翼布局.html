@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            height: 500px;
+            padding: 0 200px;
+            overflow: hidden;
+
+        }
+
+        .center {
+            height: 500px;
+            width: 100%;
+            background: blue;
+            float: left;
+        }
+
+        .left, .right {
+            width: 200px;
+            height: 500px;
+            float: left;
+            position: relative;
+        }
+
+        .left {
+            background: red;
+            margin-right: -200px;
+            right: 200px;
+        }
+
+        .right {
+            background: green;
+            margin-left: -200px;   
+            left: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+    </div>
+
+    <script>
+        // 圣杯布局如上： padding + position + float 
+        // 双飞翼： float + margin
+    </script>
+</body>
+</html>

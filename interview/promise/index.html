@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+    <script src="./_promise.js"></script>
+</head>
+<body>
+    <script>
+        var p = new Promise((resolve, reject) => {
+            resolve('ok')
+            // reject('err')
+            // throw 'error'
+
+            // setTimeout(() => {
+            //     resolve('ok')
+            //     // reject('err')
+            // }, 1000);
+        })
+
+        // p.then(res => {
+        //     console.log(1, res)
+        // }, err => {
+        //     console.log(err)
+        // })
+        // p.then(res => {
+        //     console.log(2, res)
+        // }, err => {
+        //     console.log(err)
+        // })
+
+        // 同步任务 then 返回的结果 //  是一个 promise
+        const res = p.then(res => {
+            // console.log(1, res)
+            // return new Promise((res, rej) => {
+            //     // res('success')
+            //     rej('no')
+            // });
+
+            // 抛出异常
+            throw 'failq'
+        }, err => {
+            console.log(err)
+        })
+        console.log(res)
+    </script>
+</body>
+</html>

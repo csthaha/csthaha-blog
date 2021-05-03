@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <button id="fd">防抖</button>
+
+    <script>
+        let dom = document.getElementById('fd')
+        function click(arg) {
+            console.log('this is ', arg)
+        }
+        dom.addEventListener('click', function() {
+            testDebounce('this is a debounce func')
+        })
+
+        function _debounce(fn, time) {
+            let timer;
+            return function() {
+                var args = arguments
+                if(timer) clearTimeout(timer)
+
+                timer = setTimeout(() => {
+                    fn.apply(this, args)
+                },time)
+            }
+        }
+
+        var testDebounce = _debounce(click, 2000)
+    </script>
+</body>
+</html>

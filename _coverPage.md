@@ -23,6 +23,8 @@
 
 [2021/5/2-log](log/20210502.md)
 
+[2021/5/4-log](log/20210504.md)
+
 [Get Started](README)
 <!-- ![color](#00FFCC) -->
 <!-- ![color](#669999) -->

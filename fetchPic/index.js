@@ -2,6 +2,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const fs = require('fs')
 const request = require('request')
+const async = require('async')
 
 // 虎牙
 const hy = {
@@ -33,6 +34,7 @@ async function getData(contentName) {
         var src = $(this).find("img").attr(attr)
         let name =  $(this).find("img").attr("title") ? $(this).find("img").attr("title").replace('的直播', '') : index
         index === 2 && console.log(src, '图片地址', name);
+        if(index > 10) return   //我只下载十张
         imgList.push({
             src,
             name
@@ -40,14 +42,23 @@ async function getData(contentName) {
     });
     
     mkDir(contentName)
+    // 法医
     imgList.forEach((item, idx) => {
         downloadPic(contentName, item)
     })
     // downloadPic(contentName, imgList[0])
 
+    // 法二
+    // async.mapSeries(imgList, function(item, callback) {
+    //     setTimeout(function() {
+    //         downloadPic(contentName, item, function(err, data){});  
+    //         callback(null, item);
+    //     }, 100);
+    // }, function(err, results) {});
+
 }
 
-function downloadPic(foldName, item) {
+function downloadPic(foldName, item, callback) {
     let {src, name} = item
     // return new Promise((resolve) => {
     //     request({
@@ -61,7 +72,18 @@ function downloadPic(foldName, item) {
     //         console.log('保存图片成功'+name)
     //     });
     // })
-    request(src).pipe(fs.createWriteStream(`${foldName}/${name}`));
+
+    // 法医
+    if(!src.includes('http')) return
+    request(src).pipe(fs.createWriteStream(`${foldName}/${name}`))
+
+    // 法儿
+    // request.head(src, function() {
+    //     if(!src.includes('http')) return
+    //     request(src).pipe(fs.createWriteStream(`${foldName}/${name}`)).on('close', function() {
+    //         callback(null);
+    //     });
+	// });
 }
 
 function mkDir(name) {

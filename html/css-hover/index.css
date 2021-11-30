@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box ;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    position: relative; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    gap: 10px;
+}
+.container .card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    margin: 0 -75px;
+    /* clip-path: polygon(50% 0%, 0% 100%, 100% 100%); */
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.container .card:nth-child(2) {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.container .card img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.container .card:hover img {
+    transform: scale(0.5);
+}

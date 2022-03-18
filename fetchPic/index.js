@@ -42,7 +42,7 @@ async function getData(contentName) {
     });
     
     mkDir(contentName)
-    // 法医
+    // 法一
     imgList.forEach((item, idx) => {
         downloadPic(contentName, item)
     })
@@ -73,11 +73,11 @@ function downloadPic(foldName, item, callback) {
     //     });
     // })
 
-    // 法医
+    // 法一
     if(!src.includes('http')) return
     request(src).pipe(fs.createWriteStream(`${foldName}/${name}`))
 
-    // 法儿
+    // 法二
     // request.head(src, function() {
     //     if(!src.includes('http')) return
     //     request(src).pipe(fs.createWriteStream(`${foldName}/${name}`)).on('close', function() {

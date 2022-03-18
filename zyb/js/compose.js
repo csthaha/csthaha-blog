@@ -64,7 +64,7 @@ function traverse(obj, handler) {
 let form = {
     name: 'zyb',
     addr: {
-        p: ' jx ',
+        p: ' j x ',
         c: ' ga'
     }
 }

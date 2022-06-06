@@ -58,3 +58,8 @@
   .sidebar ul li a {
     font-family: Brush Script MT, Brush Script Std, cursive;
   }
+  .cla-title {
+    display: inline-block;
+    width: 100%;
+
+}

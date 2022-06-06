@@ -34,6 +34,7 @@ const data = [
 // console.log(root);
 
 
+// 方法一
 function arrToTree(arr) {
     if (!Array.isArray(arr)) return;
     const iteMapIndex = {}
@@ -62,3 +63,63 @@ function arrToTree(arr) {
 
 }
 console.log(arrToTree(data));
+
+
+// 方法二：递归查找children
+function transfer2(data, childrenRes, pId) {
+    for(let i = 0; i < data.length; i++) {
+        if(data[i].parentId === pId) {
+            const newItem = {...data[i], children: []}
+            childrenRes.push(newItem)
+            transfer2(data, newItem.children, data[i].id)
+        }
+    }
+}
+
+const arrayToTree = (data, pid) => {
+    const result = [];
+    transfer2(data, result, pid)
+    return result;
+}
+console.log(arrayToTree(data, null)[0]);
+
+// 方法二-二
+const geTree = (data, pId) => 
+    data
+        .filter(item => item.parentId === pId)
+        .map(item => ({...item, children: geTree(data, item.id)}));
+
+console.log(geTree(data, null)[0]);
+
+
+// 方法三
+function transferMap(items, pId) {
+    const result = [];   // 存放结果集
+    const itemMap = {};  // 
+    for (const item of items) {
+        const id = item.id;
+        const pid = item.parentId;
+        itemMap[id] = {
+            ...item,
+            children: itemMap[id] ? itemMap[id]['children'] : []
+        }
+        const treeItem =  itemMap[id];
+        if (pid === pId) {
+            result.push(treeItem);
+        } else {
+            if (!itemMap[pid]) {
+                itemMap[pid] = {
+                    children: [],
+                }
+            }
+            itemMap[pid].children.push(treeItem)
+        }
+
+    }
+    return result;
+}
+
+console.log(transferMap(data, null)[0]);
+
+// 性能： 三、一、二
+// 三最好一次遍历

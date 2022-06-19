@@ -25,7 +25,7 @@ const imgUrlList2 = [
 
 // 生成随机数组
 let allImags = [...imgUrlList1, ...imgUrlList1].sort(() => 0.5 - Math.random())
-if(Math.random - 0.5 > 0) {
+if(Math.random() - 0.5 < 0) {
     console.log(1);
     allImags = [...imgUrlList2, ...imgUrlList2].sort(() => 0.5 - Math.random())
 }
@@ -47,6 +47,7 @@ function createImgTag(src, index) {
 }
 
 function openFun(e) {
+    if(chooseList.length > 1) return;
     const index = e.target.id
     const realSrc = allImags[index]
     // console.log(imgDom.src); 
@@ -58,6 +59,7 @@ function openFun(e) {
     imgDom[index].setAttribute('src', `${srcBase}${realSrc}`)
     // 判断是否相等
     setTimeout(jugeGirl, 500)
+    setTimeout(youWin, 1000)
 }
 
 function jugeGirl() {
@@ -66,17 +68,24 @@ function jugeGirl() {
             alert('恭喜你找到一组美女！')
             imgDom[chooseList[0]].setAttribute('src', `${srcBase}${winSrc}`)
             imgDom[chooseList[1]].setAttribute('src', `${srcBase}${winSrc}`)
-            chooseList = []
             score++;
             scoreDom.innerHTML = `恭喜您，您本局获取的分时是：${score}`
         } else {
             alert('没有匹配哦！')
+            imgDom[chooseList[0]].setAttribute('src', `${srcBase}${backSrc}`)
             imgDom[chooseList[1]].setAttribute('src', `${srcBase}${backSrc}`)
-            chooseList.splice(1, 1)
         }
+        chooseList = []
     }
 }
 
 allImags.forEach((item, index) => {
     createImgTag(item, index)
 })
+
+function youWin() {
+    const bool = Array.from(imgDom).every(img => img.src === `${srcBase}${winSrc}`)
+    if(bool) {
+        alert('you win')
+    }
+}

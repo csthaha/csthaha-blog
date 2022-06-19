@@ -8,16 +8,28 @@
 
     <style>
         .game {
-            width: 630px;
-            height: 600px;
+            width: 100%;
+            padding: 30px;
+            height: 100%;
+            box-sizing: border-box;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
         .game-image {
-            width: 200px;
+            width: 30%;
             margin-right: 10px;
+        }
+        @media screen and (min-width: 600px) {
+            .game {
+                width: 630px;
+                height: 600px;
+            }
+            /* .game-image {
+                width: 200px;
+                margin-right: 10px;
+            } */
         }
     </style>
 </head>

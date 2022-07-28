@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1 px</title>
-</head>
-<style>
+  </head>
+  <style>
     /*
         移动端 1px 像素边框
 
@@ -19,24 +19,24 @@
 
     /* 1. 伪元素 transform: scale(0.5) 实现 */
     .px {
-        width: 100px;
-        height: 100px;
-        background-color: antiquewhite;
-        position: relative;
+      width: 100px;
+      height: 100px;
+      background-color: antiquewhite;
+      position: relative;
     }
     .border-1px::after {
-        content: '';
-        position: absolute;
-        /* box-sizing: border-box; */
-        /* top: 0; */
-        /* left: 0; */
-        width: 200%;
-        height: 200%;
-        border: 1px solid #000;
-        border-radius: 4px;
-        /* -webkit-transform: scale(0.5); */
-        transform: scale(0.5);
-        -webkit-transform-origin: top left;
+      content: "";
+      position: absolute;
+      /* box-sizing: border-box; */
+      /* top: 0; */
+      /* left: 0; */
+      width: 200%;
+      height: 200%;
+      border: 1px solid #000;
+      border-radius: 4px;
+      /* -webkit-transform: scale(0.5); */
+      transform: scale(0.5);
+      -webkit-transform-origin: top left;
     }
 
     /* 2. border-image 图片实现 */
@@ -47,7 +47,7 @@
 
     /* 3. viewport+rem实现 */
     /* <meta name="viewport" id="WebViewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"> */
-            /* var viewport = document.querySelector("meta[name=viewport]");  
+    /* var viewport = document.querySelector("meta[name=viewport]");  
             下面是根据设备像素设置viewport  
             if (window.devicePixelRatio == 1) {  
                 viewport.setAttribute('content', 'width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no');  
@@ -61,12 +61,183 @@
             var docEl = document.documentElement;  
             var fontsize = 10 * (docEl.clientWidth / 320) + 'px';  
             docEl.style.fontSize = fontsize; */
+  </style>
+  <body>
+    <div class="px border-1px"></div>
+  </body>
 
-    
-</style>
-<body>
-    <div class="px border-1px">
+  <script>
+    class MyPromise {
+      PENDING = "pending";
+      FULFILLED = "fulfilled";
+      REJECT = "reject";
+      constructor(fn) {
+        if (typeof fn !== "function") {
+          throw new TypeError(`Promise resolver ${fn} is not a function`);
+        }
+        this.initValue();
+        this.Reslovecallback = [];
+        this.Rejectcallback = [];
+        try {
+          fn(this.reslove.bind(this), this.reject.bind(this));
+        } catch (e) {
+          this.reject(e);
+        }
+      }
+      initValue() {
+        this.state = this.PENDING;
+        this.value = null;
+        this.reason = null;
+      }
+      reslove(value) {
+        if (this.state == this.PENDING) {
+          this.state = this.FULFILLED;
 
-    </div>
-</body>
+          this.value = value;
+          this.Reslovecallback.forEach((fn) => {
+            fn(this.value);
+          });
+        }
+      }
+      reject(reason) {
+        if (this.state == this.PENDING) {
+          this.state = this.REJECT;
+          this.reason = reason;
+          this.Rejectcallback.forEach((fn) => {
+            fn(this.reason);
+          });
+        }
+      }
+      then(onReslove, onReject) {
+        if (typeof onReslove !== "function") {
+          onReslove = function (value) {
+            return value;
+          };
+        }
+        if (typeof onReject !== "function") {
+          onReject = function (error) {
+            throw error;
+          };
+        }
+        let promise2 = new MyPromise((reslove, reject) => {
+          if (this.state === this.REJECT) {
+            setTimeout(() => {
+              try {
+                const x = onReject(this.reason);
+                MyPromise.reslovePromise(promise2, x, reslove, reject);
+              } catch (e) {
+                reject(e);
+              }
+            });
+          }
+          if (this.state === this.FULFILLED) {
+            setTimeout(() => {
+              try {
+                const x = onReslove(this.value);
+                MyPromise.reslovePromise(promise2, x, reslove, reject);
+              } catch (e) {
+                reject(e);
+              }
+            });
+          }
+          if ((this.state = this.PENDING)) {
+            this.Reslovecallback.push((value) => {
+              setTimeout(() => {
+                try {
+                  const x = onReslove(value);
+                  MyPromise.reslovePromise(promise2, x, reslove, reject);
+                } catch (e) {
+                  reject(e);
+                }
+              });
+            });
+            this.Rejectcallback.push((reason) => {
+              setTimeout(() => {
+                try {
+                  const x = onReject(reason);
+                  MyPromise.reslovePromise(promise2, x, reslove, reject);
+                } catch (e) {
+                  reject(e);
+                }
+              });
+            });
+          }
+        });
+        return promise2;
+      }
+    }
+    MyPromise.reslovePromise = function (promise2, x, reslove, reject) {
+      if (promise2 === x) {
+        throw new TypeError(" cycle promise");
+      }
+      if (x instanceof MyPromise) {
+        x.then(
+          (value) => {
+            MyPromise.reslovePromise(promise2, value, reslove, reject);
+          },
+          (reason) => {
+            reject(reason);
+          }
+        );
+      } else if (
+        x !== null &&
+        (typeof x === "object" || typeof x === "function")
+      ) {
+        try {
+          if (typeof x.then === "function") {
+            x.then(
+              (value) => {
+                MyPromise.reslovePromise(promise2, value, reslove, reject);
+              },
+              (reason) => {
+                reject(reason);
+              }
+            );
+          }
+        } catch (e) {
+          reject(e);
+        }
+      } else {
+        reslove(x);
+      }
+    };
+    let p = new MyPromise((reslove, reject) => {
+      setTimeout(() => {
+        reslove(1);
+        reject(2);
+      }, 300);
+    });
+    p.then(
+      (res) => {
+        return new MyPromise((reslove) => {
+          setTimeout(() => {
+            console.log(res);
+            reslove(5);
+          }, 500);
+        });
+      },
+      (error) => {
+        console.log(3);
+      }
+    )
+      .then((res) => {
+        return new Promise((reslove) => {
+          setTimeout(() => {
+            console.log(res);
+            reslove(8);
+          }, 200);
+        });
+      })
+      .then((res) => {
+        return new Promise((reslove) => {
+          setTimeout(() => {
+            console.log(res);
+            reslove(10);
+          }, 200);
+        });
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  </script>
 </html>

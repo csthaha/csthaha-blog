@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body,
+    html {
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+        color: #000000;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    thead {
+        background: #3d444c;
+        color: #ffffff;
+    }
+
+    td,
+    th {
+        border: 1px solid #e1e1e1;
+        padding: 0;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+    }
+</style>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>price</th>
+                <th>sales</th>
+            </tr>
+        </thead>
+        <tbody id="jsList">
+            <tr>
+                <td>1</td>
+                <td>10.0</td>
+                <td>800</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>30.0</td>
+                <td>600</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>20.5</td>
+                <td>700</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>40.5</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>60.5</td>
+                <td>300</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>50.0</td>
+                <td>400</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>70.0</td>
+                <td>200</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>80.5</td>
+                <td>100</td>
+            </tr>
+        </tbody>
+     </table>
+     <!-- 测试 -->
+     <button onclick="sort('price', 'asc')">测试</button>
+
+
+    <script>
+        function sort(type, order) {
+    let tb = document.getElementById("jsList");
+    // console.log(tb.children);
+    // tb.children是HTMLCollection类型的伪数组，不算真正意义上的数组，不能直接使用Array原型上的sort方法
+    // 所以这里通过Array.prototype.slice.call将tb.children转换成一个真正的数组
+    const arr = Array.prototype.slice.call(tb.children)
+    // 也可以使用以下方法
+    // const arr = Array.from(tb.children)
+    // const arr = [...tb.children]
+
+    // 排序
+    arr.sort((a, b) => {
+        // asc升序，desc降序
+        if (order === 'asc') {
+            return parseFloat(a.children[thIndex[type]].innerHTML) - parseFloat(b.children[thIndex[type]].innerHTML)
+        } else if (order === "desc") {
+            return parseFloat(b.children[thIndex[type]].innerHTML) - parseFloat(a.children[thIndex[type]].innerHTML)
+        }
+
+
+    })
+    arr.forEach((item) => {
+        tb.appendChild(item)
+    })
+    }
+
+    // 配置type字段与在tr中的索引的映射关系
+    const thIndex = {
+    id: 0,
+    price: 1,
+    sales: 2
+    }
+    </script>
+</body>
+</html>

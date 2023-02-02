@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">点我</button>
+    <div id="box"></div>  
+
+    <script>
+        const btn = document.getElementById('btn');
+        const box = document.getElementById('box');
+
+        btn.addEventListener('click', function() {
+            const MB = 1024 * 1024;
+            log();
+
+            function log() {
+                const memory = performance.memory.totalJSHeapSize;
+                const usagedMemory = Math.floor(memory / MB);
+                box.insertAdjacentHTML('beforeend', `<span>${usagedMemory} </span>`);
+
+                const obj = {usagedMemory, str: 'g'.repeat(50 * MB)};
+                console.log(obj); 
+
+                setTimeout(() => log(), 50);
+            }
+        });
+
+        // 通过 performance.memory.totalJSHeapSize 是可以拿到堆内存大小的。
+
+
+        // element.insertAdjacentHTML
+    </script>
+</body>
+</html>

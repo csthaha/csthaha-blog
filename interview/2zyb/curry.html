@@ -12,8 +12,7 @@
             let res = arr.reduce((pre,next) => pre+next,0)
             
             function a(...s) {
-            res = s.reduce((pre,next) => pre + next ,res)
-
+                res = s.reduce((pre,next) => pre + next ,res)
                 return a
             }
             a.toString = () => {

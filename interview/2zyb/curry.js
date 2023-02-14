@@ -7,7 +7,7 @@ function curry() {
     }
 
     addFun.toString = () => args.reduce((pre, next) => pre + next)
-
+    console.log(addFun);
     return addFun
 }
 

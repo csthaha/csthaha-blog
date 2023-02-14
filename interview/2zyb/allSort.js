@@ -5,23 +5,26 @@
  var permutation = function(s) {
     let res = []
 
-    const backTrack = (path) => {
+    const backTrack = (path, index) => {
         if(path.length === s.length) {
-            res.push(path)
+            if(!res.includes(path)) {
+                res.push(path)
+            }
             return
         }
 
         for(let i = 0; i < s.length; i++) {
-            if(!path.includes(s[i])) {
-                path.push(s[i])
-                backTrack(path.concat())
-                path.pop()
-            }
+            if(path.indexOf(s[i]) > -1 || s[i] === s[ i -1 ] && path.includes(s[i] === -1))continue
+            path = path + s[i]
+            backTrack(path.slice(), index + 1)
+            path = path.slice(0, path.length - 1)
+
         }
     }
 
-    backTrack([])
-    return res.map(item => item.join(''))
+    backTrack('')
+    console.log(res);
+    // return res.map(item => item.join(''))
 };
 
 console.log(permutation("aab"))

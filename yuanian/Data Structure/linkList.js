@@ -127,6 +127,40 @@ class LinkNode {
         // 返回移除节点的数据域，即要移除的元素
         return cur.data;
     }
+
+    // removeHead 移除首节点
+    removeHead() {
+        if(this.head === null) return undefined;
+        const cur = this.head;
+        this.head = cur.next;
+        this.count --;
+        return cur.data;
+    }
+
+    // removeTail 移除尾节点。
+    removeTail() {
+        if(this.head === null) return undefined;
+        if(this.count === 1) {
+            this.removeHead()
+        }
+        const preNode = this.getElementAt(this.count - 2);
+        const delNode = preNode.next;
+        preNode.next = delNode.next;
+        this.count --;
+        return delNode.data
+    }
+
+    // toString 返回整个链表的字符串
+    toString() {
+        if(this.head === null) return undefined;
+        let cur = this.head;
+        let str = ''
+        while(cur) {
+            str += cur.data;
+            cur = cur.next;
+        }
+        return str;
+    }
 }
 
 const ln1 = new LinkNode();
@@ -134,4 +168,7 @@ ln1.append(1)
 ln1.append(2)
 ln1.append(3)
 console.log(ln1);
-ln1.remove(2)
+// ln1.removeTail(2)
+console.log(
+    ln1.toString()
+);

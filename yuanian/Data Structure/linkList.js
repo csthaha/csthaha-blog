@@ -172,3 +172,40 @@ console.log(ln1);
 console.log(
     ln1.toString()
 );
+
+// 应用：
+ // 翻转链表  迭代
+ const reverse_linkNode = (head) => {
+     console.log(head);
+     if(!head) return null;
+     let cur = head;
+     let pre = null;
+     while(cur) {
+        //  const nextNode = cur.next;
+        //  cur.next = pre;
+        //  pre = cur;
+        //  cur = nextNode;
+        [cur.next, pre, cur] = [pre, cur, cur.next]
+     }
+     return pre;
+ }
+
+ // 递归实现
+ const reverse_linkNode_recursion = (head) => {
+     if(!head) return null;
+     // 旧节点的尾节点， 结束递归。 
+     if(!head.next) return null;
+     // 进行递归。直到尾节点。
+     const newHead = reverse_linkNode_recursion(head.next)
+     // 两个节点想通下面代码
+
+     // 进行反向指向:  a -> b 改成 b -> a
+     head.next.next = head;
+     // a -> null
+     head.next = null;
+     return newHead;
+ }
+
+ console.log(
+    reverse_linkNode(ln1.head)
+ );

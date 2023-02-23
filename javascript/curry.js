@@ -40,8 +40,18 @@ console.log(sum(1)(2)(3)(4))
 //     var args = [].
 // }
 
-
-
+function _curry(func) {
+    return function curried(...args) {
+      if (args.length >= func.length) {
+        return func.apply(this, args);
+      } else {
+        return function(...args2) {
+          return curried.apply(this, args.concat(args2));
+        }
+      }
+    };
+}
+  
 
 console.log(Object.prototype.toString.call('1'))
 console.log(Array.prototype.slice.call('1'))

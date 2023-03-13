@@ -30,3 +30,13 @@ const _new = function() {
 let p2 = _new(P, 'zyb', '19')
 
 console.log(p2, p2.name, '-', p2.age)
+
+
+Function.prototype.myNew = function(constructor, ...args) {
+    // 创建一个新对象，并将新对象的原型指向构造函数的原型对象
+    const obj = Object.create(constructor.prototype)
+    // 执行构造函数。并将 this 指向新对象。
+    const result = constructor.apply(obj, args);
+    // 判断返回值是否是一个对象。是返回该对象。否则返回 obj；
+    return result instanceof Object ? result : obj;
+}

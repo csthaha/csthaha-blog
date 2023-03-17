@@ -194,7 +194,7 @@ console.log(
  const reverse_linkNode_recursion = (head) => {
      if(!head) return null;
      // 旧节点的尾节点， 结束递归。 
-     if(!head.next) return null;
+     if(!head.next) return head;
      // 进行递归。直到尾节点。
      const newHead = reverse_linkNode_recursion(head.next)
      // 两个节点想通下面代码

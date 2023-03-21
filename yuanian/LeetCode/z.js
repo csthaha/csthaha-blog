@@ -1,32 +1,29 @@
 /**
  * @param {number[]} nums
- * @param {number} k
- * @return {number[]}
+ * @return {number}
  */
-var topKFrequent = function(nums, k) {
+var findShortestSubArray = function(nums) {
     const map = new Map();
     for(let num of nums) {
-        if(!map.has(num)) {
-            map.set(num, 1)
-        } else {
-            let count = map.get(num) + 1;
-            map.set(num, count)
-        }
+        map.set(num, (map.get(num) || 0) + 1);
     }
-    const res = [];
-    let values = [...map.values()].sort((a, b) => b - a);
-    let keys =  [...map.keys()]
-    console.log(map, keys, values);
-    for(let i = 0; i < k; i++) {
-        let key = keys.find(key => map.get(key) === values[i])
-        res.push(key)
-        map.delete(key)
-    }
-    return res
+
+    let count = [...map.values()].sort((a, b) => b - a)[0];
+    let num = [...map.keys()].filter(n => map.get(n) === count);
+    
+    let distance = num.map(item => {
+        let startIndex = nums.indexOf(item);
+        let endIndex = nums.lastIndexOf(item);
+        return endIndex - startIndex + 1;
+    })
+
+
+    return distance.sort((a, b) => a - b)[0]
 };
-// console.log(
-//     topKFrequent([1,1,1,2,2,3], 2)
-// );
+
 console.log(
-    topKFrequent([1,2], 2)
+    findShortestSubArray([1,2,2,3,1])
+);
+console.log(
+    findShortestSubArray([1,2,2,3,1,4,2])
 );

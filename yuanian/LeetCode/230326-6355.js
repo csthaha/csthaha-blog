@@ -27,9 +27,10 @@ var primeSubOperation = function(nums) {
         }
         return max;
     }
-    for(let i = 0; i < nums.length - 1; i++) {
+    nums[0] = nums[0] - maxPri(nums[0])
+    for(let i = 1; i < nums.length - 1; i++) {
         // 减去该数的最大指数
-        nums[i] -= maxPri(nums[i])
+        nums[i] -= maxPri(nums[i - 1], nums[i], nums[i + 1])
     }
     console.log(nums);
 };

@@ -60,7 +60,7 @@ var AddTwoSum = function(a, b) {
         jw = true;
         diff = a + 10 - b;
       }
-      ans.push(diff);
+      ans.push(diff);j
     }
     return ans
       .reverse()

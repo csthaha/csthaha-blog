@@ -33,19 +33,35 @@ class Trie {
         }
         node.isEndOfWord = true; // 在字符串结尾的节点上打标记
     }
-  
-    search(word) {
+
+    searchPrefix(prefix) {
         let node = this.root;
-        for (let i = 0; i < word.length; i++) {
-            const char = word[i];
-            if (!node.children[char]) {
-                // 当前节点没有该字符的子节点，说明该字符串不存在于前缀树中
+        for(let str of prefix) {
+            if(!node.children[str]) {
                 return false;
             }
-            node = node.children[char]; // 移动到该字符的子节点
+            node = node.children[str]
         }
-        // 如果最后节点上打了结尾标记，则说明该字符串已存在
-        return node.isEndOfWord;
+        return node;
+    }
+  
+    search(word) {
+        // let node = this.root;
+        // for (let i = 0; i < word.length; i++) {
+        //     const char = word[i];
+        //     if (!node.children[char]) {
+        //         // 当前节点没有该字符的子节点，说明该字符串不存在于前缀树中
+        //         return false;
+        //     }
+        //     node = node.children[char]; // 移动到该字符的子节点
+        // }
+        // // 如果最后节点上打了结尾标记，则说明该字符串已存在
+        // return node.isEndOfWord;
+        let node = this.searchPrefix(word);
+        return node && node.isEndOfWord;
     }
 }
-  
+
+const trieTree = new Trie();
+trieTree.insert('apple');
+console.log(trieTree);
